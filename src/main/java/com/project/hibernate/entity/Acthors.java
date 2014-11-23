@@ -23,7 +23,7 @@ public class Acthors {
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment",strategy="increment")
 	@Column(name = "ID")
-	private Integer id;
+	private Long id;
 	
 	@Pattern(regexp="^[a-zA-z].{1,20}$")
 	@Size(max = 20,min = 1,message = "name is to short or long")
@@ -37,7 +37,7 @@ public class Acthors {
 	
 	@Size(max = 4,min = 1,message = "age is to short or long")
 	@Column(name = "AGE")
-	private Integer age;
+	private Long age;
 
 	@Pattern(regexp="^[a-zA-z].{1,20}$")
 	@Column(name = "APPOINTMENT")
@@ -45,14 +45,16 @@ public class Acthors {
 	
 	@Pattern(regexp="^[0-9].{1,10}$")
 	@Column(name = "CARRER")
-	private Integer carrer;
+	private Long carrer;
 	
 	
 	public Acthors() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Acthors(String name, String surname, Integer age, String appointment, Integer carrer) {
+	
+
+	public Acthors(String name, String surname, Long age, String appointment, Long carrer) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -61,49 +63,64 @@ public class Acthors {
 		this.carrer = carrer;
 	}
 
+
+
 	public String getName() {
 		return name;
 	}
+
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
+
 	public String getSurname() {
 		return surname;
 	}
+
 
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
 
-	public Integer getAge() {
+
+	public Long getAge() {
 		return age;
 	}
 
-	public void setAge(Integer age) {
+
+	public void setAge(Long age) {
 		this.age = age;
 	}
+
 
 	public String getAppointment() {
 		return appointment;
 	}
 
+
 	public void setAppointment(String appointment) {
 		this.appointment = appointment;
 	}
 
-	public Integer getCarrer() {
+
+	public Long getCarrer() {
 		return carrer;
 	}
 
-	public void setCarrer(Integer carrer) {
+
+	public void setCarrer(Long carrer) {
 		this.carrer = carrer;
 	}
 
-	public Integer getId() {
+
+	public Long getId() {
 		return id;
 	}
+
+	 
+
 	
 	
 

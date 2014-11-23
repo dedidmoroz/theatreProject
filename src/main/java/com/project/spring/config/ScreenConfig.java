@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 
 import com.project.main.Presentation;
-import com.project.main.controllers.FXMLMainPresantation;
+import com.project.main.controllers.FXMLMainPresentation;
 
 import javafx.beans.Observable;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +27,8 @@ public class ScreenConfig implements Observer{
 	private Stage stage;
 	private Scene scene;
 	private StackPane node;
+	private Double STAGE_SIZE_H = Double.valueOf("651");
+	private Double STAGE_SIZE_V = Double.valueOf("460");
 	
 	public Stage getStage() {
 		return stage;
@@ -47,23 +49,34 @@ public class ScreenConfig implements Observer{
     		System.exit(0);
     		
     	});
-    	this.getStage().show();
+    	this.stage.setMaxHeight(this.STAGE_SIZE_V);
+    	this.stage.setMaxWidth(this.STAGE_SIZE_H);
+    	
+    	this.stage.show();
     }
     
     public void setNode(Node node){
-    	this.node.getChildren().setAll(node);
+    	this.node.getChildren().add(node);
     }
 
+    
+    @Bean
+    @Scope("prototype")
+    public FXMLMainPresentation mainPresantation(){
+    	return new FXMLMainPresentation(this);
+    }
+    
+    
     public Node getNode(final Presentation controller,URL resource){
     	FXMLLoader loader = new FXMLLoader(resource);
     	loader.setControllerFactory(new Callback<Class<?>, Object>() {
 			
 			@Override
 			public Object call(Class<?> arg0) {
+				// TODO Auto-generated method stub
 				return controller;
 			}
 		});
-    	
     	try {
 			return (Node) loader.load();
 		} catch (IOException e) {
@@ -72,15 +85,11 @@ public class ScreenConfig implements Observer{
 		}
     }
     
-    
-    @Bean
-    @Scope("prototype")
-    public FXMLMainPresantation mainPresantation(){
-    	return new FXMLMainPresantation(this);
-    }
-    
+   
     public void loadMainPresentation(){
-    	this.setNode(getNode(mainPresantation(), getClass().getResource("/scenes/mainScene.fxml")));
+    	Node node = getNode(mainPresantation(), getClass().getResource("/mainScene.fxml"));
+    	this.setNode(node);
+    	
     	System.out.println("load");
     }
     

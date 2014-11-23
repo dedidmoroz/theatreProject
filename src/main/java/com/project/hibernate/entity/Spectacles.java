@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -17,34 +19,37 @@ public class Spectacles {
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment",strategy="increment")
 	@Column(name = "ID")
-	private Integer id;
+	private Long id;
 	
 	@NotNull
 	@Column(name = "NAME")
 	private String name;
 	
 	@Column(name="YEAR_OF_EMPL")
-	@Temporal(TemporalType.DATE)
-	@Basic(fetch=FetchType.LAZY)
-	private Date year;
 	
+	private Long year;
+	
+	@Size(min=1,max = 10)
+	@Pattern(regexp="^[0-9].{1,10}$")
 	@Column(name = "BOUGETTE")
-	private Integer bougette;
+	private Long bougette;
 
-	@NotNull
-	@OneToOne(mappedBy="spectacle")
-	private Employments employment; 
-	
+ 
 	public Spectacles() {
 		
 	}
 
-	public Spectacles(String name, Date year, Integer bougette) {
+
+	public Spectacles(String name, Long year, Long bougette) {
 		super();
 		this.name = name;
 		this.year = year;
 		this.bougette = bougette;
 	}
+
+
+
+
 
 	public String getName() {
 		return name;
@@ -54,29 +59,28 @@ public class Spectacles {
 		this.name = name;
 	}
 
-	public Date getYear() {
-		return year;
-	}
-
-	public void setYear(Date year) {
-		this.year = year;
-	}
-
-	public Integer getBougette() {
+	 
+	public Long getBougette() {
 		return bougette;
 	}
 
-	public void setBougette(Integer bougette) {
+	public void setBougette(Long bougette) {
 		this.bougette = bougette;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
+ 
+	public Long getYear() {
+		return year;
+	}
 
-	public Employments getEmployment() {
-		return employment;
+
+	public void setYear(Long year) {
+		this.year = year;
 	}
 
 	
+	 
 }

@@ -13,7 +13,7 @@ import com.project.hibernate.entity.Employments;
 import com.project.hibernate.entity.Spectacles;
 
 @Repository
-@Transactional
+
 public class DAOImplementation  implements DAO{
 
 	
@@ -33,7 +33,7 @@ public class DAOImplementation  implements DAO{
 	public Session getCurrentSesion(){
 		return this.sessionFactory.getCurrentSession();
 	}
-
+	@Transactional
 	@Override
 	public void save(Object instance, Class<?> type) {
 	     if(type == Acthors.class){
@@ -50,17 +50,18 @@ public class DAOImplementation  implements DAO{
 	     } 
 	}
 
+	@Transactional
 	@Override
 	public List getAll(Class<?> type) {
 		return this.getCurrentSesion().createCriteria(type).list();
 	}
-
+	@Transactional
 	@Override
-	public List makeQuery(String hqlQuery) {
+	public List makeQuery(String sqlQuery,Class<?> type) {
 		// TODO Auto-generated method stub
-		return this.getCurrentSesion().createQuery(hqlQuery).list();
+		return this.getCurrentSesion().createSQLQuery(sqlQuery).addEntity(type).list();
 	}
-
+	@Transactional
 	@Override
 	public void update(Object instance, Class<?> type) {
 		 if(type == Acthors.class){
@@ -77,22 +78,21 @@ public class DAOImplementation  implements DAO{
 	     } 
 		
 	}
-
+	@Transactional
 	@Override
 	public void delete(Object instance, int id, Class<?> type) {
 		 if(type == Acthors.class){
 	    	 Acthors acthors = (Acthors) instance;
-	    	 this.getCurrentSesion().get(type, id);
+	    	 
 	    	 this.getCurrentSesion().delete(acthors);
 	     } 
 	     if(type == Spectacles.class){
 	    	 Spectacles spectacles = (Spectacles) instance;
-	    	 this.getCurrentSesion().get(type, id);
+	    	  
 	    	 this.getCurrentSesion().delete(spectacles);
 	     } 
 	     if(type == Employments.class){
 	    	 Employments employments = (Employments) instance;
-	    	 this.getCurrentSesion().get(type, id);
 	    	 this.getCurrentSesion().delete(employments);
 	     } 
 	}

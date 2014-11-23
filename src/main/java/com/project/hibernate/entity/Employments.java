@@ -14,13 +14,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
 @Table(name = "employments")
-@Access(AccessType.FIELD)
+ 
 public class Employments {
 
 	@Id
@@ -29,23 +33,39 @@ public class Employments {
 	@Column(name = "ID")
 	private Integer id;
 	
+	@NotNull
 	@Column(name = "ROLE")
 	private String role;
 	
+	@Size(min=1,max = 4)
+	@Pattern(regexp="^[0-9].{1,4}$")
 	@Column(name = "YEAR_CONTRACT")
-	private Integer year_contract;
+	private Long year_contract;
 	
-	@OneToMany
+	@OneToOne
 	@JoinColumn(name = "A_ID")
-	private Set<Acthors> acthors = new HashSet<>(0);
+	private Acthors achtor;
 	
 	@OneToOne
 	@JoinColumn(name = "S_ID")
 	private Spectacles spectacle = new Spectacles();
 	
+	@Transient
+	private String act;
+	@Transient
+	private String spec;
+	
 	public Employments() {
-		// TODO Auto-generated constructor stub
 	}
+
+	
+	
+	public Employments(String role, Long year_contract) {
+		super();
+		this.role = role;
+		this.year_contract = year_contract;
+	}
+
 
 	public String getRole() {
 		return role;
@@ -55,20 +75,15 @@ public class Employments {
 		this.role = role;
 	}
 
-	public Integer getYear_contract() {
+
+
+
+	public Long getYear_contract() {
 		return year_contract;
 	}
 
-	public void setYear_contract(Integer year_contract) {
+	public void setYear_contract(Long year_contract) {
 		this.year_contract = year_contract;
-	}
-
-	public Set<Acthors> getActhors() {
-		return acthors;
-	}
-
-	public void setActhors(Set<Acthors> acthors) {
-		this.acthors = acthors;
 	}
 
 	public Spectacles getSpectacle() {
@@ -83,5 +98,38 @@ public class Employments {
 		return id;
 	}
 
+
+
+	public String getAct() {
+		return act;
+	}
+
+
+
+	public void setAct(String act) {
+		this.act = act;
+	}
+
+
+
+	public String getSpec() {
+		return spec;
+	}
+
+	public void setSpec(String spec) {
+		this.spec = spec;
+	}
+
+
+
+	public Acthors getAchtor() {
+		return achtor;
+	}
+
+	public void setAchtor(Acthors achtor) {
+		this.achtor = achtor;
+	}
+
+	
 	
 }

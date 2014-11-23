@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="636.0" styleClass="mainPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.main.controllers.FXMLMainPresentation">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="Файл">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Зберегти">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" onAction="#closeProject" text="Вихід">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Пошук">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Редагування">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Новий запис">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Видалити запис">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Про програму">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Accordion fx:id="mainAccordation" prefHeight="411.0" prefWidth="624.0">
+        <panes>
+          <TitledPane animated="false" text="Актори">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tabActhors" editable="true" layoutY="7.0" prefHeight="322.0" prefWidth="636.0" tableMenuButtonVisible="true">
+                          <columns>
+                            <TableColumn fx:id="acthId" prefWidth="100.0" text="Ідентифікатор" />
+                              <TableColumn fx:id="acthSurname" prefWidth="75.0" text="Фамілія" />
+                            <TableColumn fx:id="acthName" prefWidth="93.0" text="Ім'я" />
+                              <TableColumn fx:id="acthAge" prefWidth="75.0" text="Вік" />
+                              <TableColumn fx:id="acthAppoint" prefWidth="75.0" text="Посада" />
+                              <TableColumn fx:id="acthCarrer" prefWidth="75.0" text="Стаж" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Спектаклі">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tabSpectacles" editable="true" prefHeight="323.0" prefWidth="636.0" tableMenuButtonVisible="true">
+                          <columns>
+                            <TableColumn fx:id="specId" prefWidth="117.0" text="Ідентифікатор" />
+                            <TableColumn fx:id="specName" prefWidth="97.0" text="Назва" />
+                              <TableColumn fx:id="specDate" prefWidth="124.0" text="Дата виступу" />
+                              <TableColumn fx:id="specBougette" prefWidth="93.0" text="Бюджет" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Зайнятість">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tabEmployments" editable="true" prefHeight="329.0" prefWidth="634.0" tableMenuButtonVisible="true">
+                          <columns>
+                            <TableColumn fx:id="empId" prefWidth="130.0" text="Ідентифікатор" />
+                            <TableColumn fx:id="empRole" prefWidth="93.0" text="Роль" />
+                              <TableColumn fx:id="empContractYear" prefWidth="75.0" text="Контракт" />
+                              <TableColumn fx:id="empActhId" prefWidth="75.0" text="Актор" />
+                              <TableColumn fx:id="empSpecId" prefWidth="75.0" text="Спектакль" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </children>
+</VBox>

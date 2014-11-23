@@ -16,15 +16,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.project.hibernate.dao.DAOImplementation;
 import com.project.hibernate.service.ServiceImplementation;
-import com.project.main.controllers.FXMLMainPresantation;
+import com.project.main.controllers.FXMLMainPresentation;
 
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackageClasses={
-			DAOImplementation.class,
-			ServiceImplementation.class,
-			FXMLMainPresantation.class})
+@ComponentScan(basePackages={"com.project.hibernate.dao","com.project.hibernate.service","com.project.main.controllers"})
 @Import(value = ScreenConfig.class)
 public class AppConfig {
 	

@@ -21,7 +21,7 @@ public class ServiceImplementation  implements com.project.hibernate.service.Ser
 	}
 
 	public ServiceImplementation() {
-	 	 
+	 	 System.out.println("service");
 	}
 
 	@Override
@@ -36,9 +36,9 @@ public class ServiceImplementation  implements com.project.hibernate.service.Ser
 	}
 
 	@Override
-	public List makeQuery(String hqlQuery) {
+	public List makeQuery(String hqlQuery,Class<?> type) {
 		 
-		return dao.makeQuery(hqlQuery);
+		return dao.makeQuery(hqlQuery,type);
 	}
 
 	@Override
