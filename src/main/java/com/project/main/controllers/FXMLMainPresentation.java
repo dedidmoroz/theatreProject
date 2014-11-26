@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -110,7 +111,16 @@ public class FXMLMainPresentation extends Presentation{
     @FXML
     private Accordion mainAccordation;
 	 
-	public FXMLMainPresentation(ScreenConfig screenConfig) {
+    @FXML
+    private TitledPane actAcor;
+    
+    @FXML
+    private TitledPane emplAcor;
+    
+    @FXML
+    private TitledPane specAcor;
+	
+    public FXMLMainPresentation(ScreenConfig screenConfig) {
 		super(screenConfig);
 	}
 
@@ -130,12 +140,15 @@ public class FXMLMainPresentation extends Presentation{
 	}
 
 	
-	 	@FXML
-	    void closeProject(ActionEvent event) {
-		 	System.exit(0);
-	    }
-	
+ 	@FXML
+    void closeProject(ActionEvent event) {
+	 	System.exit(0);
+    }
+
 	Callback<TableColumn,TableCell> numeric = arg0 -> new NumericEditableTableCell();
+	
+	
+	
 	
 	
 	@SuppressWarnings("unchecked")
@@ -261,7 +274,7 @@ public class FXMLMainPresentation extends Presentation{
 		ObservableList<String> obsList2 = FXCollections.observableArrayList();
 		
 		for(Acthors i:lstActhors)
-			obsList1.add(i.getName());
+			obsList1.add(i.getSurname());
 			
 		empActhId.setCellValueFactory(new PropertyValueFactory("act"));
 		empActhId.setCellFactory(ComboBoxTableCell.forTableColumn(obsList1));
@@ -269,7 +282,7 @@ public class FXMLMainPresentation extends Presentation{
 			@Override
 			public void handle(CellEditEvent<Employments, String> arg0) {
 				String actName = arg0.getNewValue();
-				Acthors act = (Acthors) service.makeQuery("SELECT * FROM acthors where NAME = '"+actName+"'",Acthors.class).get(0);
+				Acthors act = (Acthors) service.makeQuery("SELECT * FROM acthors where SURNAME = '"+actName+"'",Acthors.class).get(0);
 				arg0.getTableView().getItems().get(arg0.getTablePosition().getRow()).setAchtor(act);
 				arg0.getTableView().getItems().get(arg0.getTablePosition().getRow()).setAct(actName);;
 			}
@@ -302,7 +315,178 @@ public class FXMLMainPresentation extends Presentation{
 		tabEmployments.setItems(FXCollections.observableArrayList(lstAll));
 	}
 	
+	@FXML
+    void clickSave(ActionEvent event) {
+		if(actAcor.isExpanded()){
+			ObservableList<Acthors> acthorsList = tabActhors.getItems();
+			for(Acthors i:acthorsList){
+				service.update(i, Acthors.class);
+			}
+			Dialogs.create().masthead("Повідомлення про стан операції").message("Збережено зміни!").
+			title("Повідомлення").showInformation();
+		}
+		if(specAcor.isExpanded()){
+			ObservableList<Spectacles> specList = tabSpectacles.getItems();
+			for(Spectacles i:specList){
+				service.update(i, Spectacles.class);
+			}
+			Dialogs.create().masthead("Повідомлення про стан операції").message("Збережено зміни!").
+			title("Повідомлення").showInformation();
+		}
+		if(emplAcor.isExpanded()){
+			ObservableList<Employments> emplList = tabEmployments.getItems();
+			for(Employments i:emplList){
+				service.update(i, Employments.class);
+			}
+			
+			Dialogs.create().masthead("Повідомлення про стан операції").message("Збережено зміни!").
+			title("Повідомлення").showInformation();
+		}
+		
+    }
+	 @SuppressWarnings("unchecked")
+	public void refresh(){
+    	this.tabActhors.getItems().clear();
+		 this.tabEmployments.getItems().clear();
+		 this.tabSpectacles.getItems().clear();
+		 
+		 tabActhors.setItems(FXCollections.observableArrayList(service.getAll(Acthors.class)));
+		 tabSpectacles.setItems(FXCollections.observableArrayList(service.getAll(Spectacles.class)));
+		 
+		 List<Employments> lstAll =(List<Employments>) service.getAll(Employments.class);
+			for(Employments i:lstAll){
+				i.setAct(i.getAchtor().getName());
+				i.setSpec(i.getSpectacle().getName());
+			}
+		 tabEmployments.setItems(FXCollections.observableArrayList(lstAll));
+    }
 	
+   
+	@FXML
+	 void clickRefresh(ActionEvent event) {
+		 this.refresh();
+	 }
+    
+    
+    
+    @SuppressWarnings({ "unchecked", "deprecation" })
+	@FXML
+    void clickNewRecord(ActionEvent event) {
+    	if(actAcor.isExpanded()){
+    		
+    		Acthors newActhor = new Acthors();
+    		newActhor.setName(" ");
+    		newActhor.setSurname(" ");
+    		newActhor.setAge(Long.valueOf("0"));
+    		newActhor.setCarrer(Long.valueOf("0"));
+    		newActhor.setAppointment(" ");
+    		service.save(newActhor, Acthors.class);
+    		
+    		this.tabActhors.getItems().clear();
+    		tabActhors.setItems(FXCollections.observableArrayList(service.getAll(Acthors.class)));
+    		Dialogs.create().masthead("Повідомлення про стан операції").message("Додано запис").
+				title("Повідомлення").showInformation();
+    	}
+		if(specAcor.isExpanded()){
+			Spectacles newSpectacle = new Spectacles();
+			newSpectacle.setName(" ");
+			newSpectacle.setBougette(Long.valueOf(0));
+			newSpectacle.setYear(Long.valueOf("2000"));
+			service.save(newSpectacle, Spectacles.class);
+			
+			this.tabSpectacles.getItems().clear();
+		    tabSpectacles.setItems(FXCollections.observableArrayList(service.getAll(Spectacles.class)));
+		    Dialogs.create().masthead("Повідомлення про стан операції").message("Додано запис").
+				title("Повідомлення").showInformation();
+		}
+		if(emplAcor.isExpanded()){
+			Employments empl = new Employments();
+			
+			empl.setRole(" ");
+			empl.setYear_contract(Long.valueOf("2000"));
+	
+			empl.setSpectacle(null);
+			empl.setAchtor(null);
+			
+			Acthors act = (Acthors) service.makeQuery("SELECT * FROM acthors WHERE ID=1", Acthors.class).get(0);
+			Spectacles spec = (Spectacles) service.makeQuery("SELECT * FROM spectacles WHERE ID=1", Spectacles.class).get(0);
+			if(spec!=null && act!=null){
+				empl.setSpectacle(spec);
+				empl.setAchtor(act);
+				service.save(empl, Employments.class);
+				this.tabEmployments.getItems().clear();
+				
+				//refresh don't touch 
+				List<Employments> lstAll =(List<Employments>) service.getAll(Employments.class);
+				for(Employments i:lstAll){
+					i.setAct(i.getAchtor().getName());
+					i.setSpec(i.getSpectacle().getName());
+				}
+				tabEmployments.setItems(FXCollections.observableArrayList(lstAll));
+				Dialogs.create().masthead("Повідомлення про стан операції").message("Додано запис").
+					title("Повідомлення").showInformation();
+			} else {
+				Dialogs.create().masthead("Повідомлення про стан операції").message("Поимилка").
+				title("Повідомлення").showError();
+				
+			}
+		}
+    }
+
+    @SuppressWarnings("deprecation")
+	@FXML
+    void clickDeleteRecord(ActionEvent event) {
+    	if(actAcor.isExpanded()){
+			if(tabActhors.getSelectionModel().getSelectedIndex()!=-1){
+				Acthors actor = tabActhors.getSelectionModel().getSelectedItem();
+				List<Employments> lst = service.makeQuery("SELECT * FROM employments WHERE A_ID = "+actor.getId(), Employments.class);
+				if(lst.size()!=0){
+					Dialogs.create().masthead("Видаліть спершу всі записи таблиці 'Зайнятість', які ссилаються на даний запис").message("Видалено!").
+					title("Повідомлення")
+						.showError();
+				}else{
+					service.delete(actor, actor.getId(), Acthors.class);
+					this.refresh();
+					Dialogs.create().masthead("Повідомлення про стан операції").message("Видалено!").
+						title("Повідомлення")
+							.showInformation();
+				}	
+				
+			}
+			
+		}
+		if(specAcor.isExpanded()){
+			
+			
+			if(tabSpectacles.getSelectionModel().getSelectedIndex()!=-1){
+				Spectacles spectacle = tabSpectacles.getSelectionModel().getSelectedItem();
+				List<Employments> lst = service.makeQuery("SELECT * FROM employments WHERE S_ID = "+spectacle.getId(), Employments.class);
+				if(lst.size()!= 0){
+					Dialogs.create().masthead("Повідомлення про стан операції")
+					.message("Видаліть спершу всі записи таблиці 'Зайнятість', які ссилаються на даний запис")
+						.title("Повідомлення")
+							.showError();
+				}else {
+					service.delete(spectacle, spectacle.getId(), Spectacles.class);
+					Dialogs.create().masthead("Повідомлення про стан операції").message("Видалено!").
+					title("Повідомлення")
+						.showInformation();
+					this.refresh();
+				}
+			}
+			
+		}
+		if(emplAcor.isExpanded()){
+			if(tabEmployments.getSelectionModel().getSelectedIndex()!=-1){
+				Employments empl = tabEmployments.getSelectionModel().getSelectedItem();
+				service.delete(empl, empl.getId(), Employments.class);
+			}
+			Dialogs.create().masthead("Повідомлення про стан операції").message("Видалено!").
+				title("Повідомлення")
+				.showInformation();
+			this.refresh();
+		}
+    }
 	
 }
  

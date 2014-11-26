@@ -47,7 +47,7 @@ public class ServiceImplementation  implements com.project.hibernate.service.Ser
 	}
 
 	@Override
-	public void delete(Object instance, int id, Class<?> type) {
+	public void delete(Object instance, Long id, Class<?> type) {
 		dao.delete(instance, id, type);	
 	}
  

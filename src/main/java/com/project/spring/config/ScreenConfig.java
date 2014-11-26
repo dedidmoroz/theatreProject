@@ -16,6 +16,7 @@ import javafx.beans.Observable;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -51,7 +52,8 @@ public class ScreenConfig implements Observer{
     	});
     	this.stage.setMaxHeight(this.STAGE_SIZE_V);
     	this.stage.setMaxWidth(this.STAGE_SIZE_H);
-    	
+    	this.stage.setTitle("Театральна діяльність");
+    	this.stage.getIcons().add(new Image(getClass().getResource("/css/icon.png").toString()));
     	this.stage.show();
     }
     

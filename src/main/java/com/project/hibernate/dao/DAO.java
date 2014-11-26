@@ -8,5 +8,5 @@ public interface DAO {
 	public List makeQuery(String sqlQuery,Class<?> type);
 	
 	public void update(Object instance,Class<?> type);
-	public void delete(Object instance,int id,Class<?> type);
+	public void delete(Object instance,Long id,Class<?> type);
 }

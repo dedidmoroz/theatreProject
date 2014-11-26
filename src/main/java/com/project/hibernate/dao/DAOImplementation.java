@@ -80,7 +80,7 @@ public class DAOImplementation  implements DAO{
 	}
 	@Transactional
 	@Override
-	public void delete(Object instance, int id, Class<?> type) {
+	public void delete(Object instance, Long id, Class<?> type) {
 		 if(type == Acthors.class){
 	    	 Acthors acthors = (Acthors) instance;
 	    	 

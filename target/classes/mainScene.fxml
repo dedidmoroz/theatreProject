@@ -12,9 +12,14 @@
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Зберегти">
+                  <MenuItem mnemonicParsing="false" onAction="#clickSave" text="Зберегти">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#clickRefresh" text="Обновити">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -32,13 +37,13 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Редагування">
             <items>
-              <MenuItem mnemonicParsing="false" text="Новий запис">
+                  <MenuItem mnemonicParsing="false" onAction="#clickNewRecord" text="Новий запис">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Видалити запис">
+                  <MenuItem mnemonicParsing="false" onAction="#clickDeleteRecord" text="Видалити запис">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
@@ -54,7 +59,7 @@
       </MenuBar>
       <Accordion fx:id="mainAccordation" prefHeight="411.0" prefWidth="624.0">
         <panes>
-          <TitledPane animated="false" text="Актори">
+          <TitledPane fx:id="actAcor" animated="false" text="Актори">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -72,7 +77,7 @@
                   </AnchorPane>
             </content>
           </TitledPane>
-          <TitledPane animated="false" text="Спектаклі">
+          <TitledPane fx:id="specAcor" animated="false" text="Спектаклі">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -88,7 +93,7 @@
                   </AnchorPane>
             </content>
           </TitledPane>
-          <TitledPane animated="false" text="Зайнятість">
+          <TitledPane fx:id="emplAcor" animated="false" text="Зайнятість">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

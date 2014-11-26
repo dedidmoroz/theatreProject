@@ -31,7 +31,7 @@ public class Employments {
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment",strategy="increment")
 	@Column(name = "ID")
-	private Integer id;
+	private Long id;
 	
 	@NotNull
 	@Column(name = "ROLE")
@@ -94,10 +94,9 @@ public class Employments {
 		this.spectacle = spectacle;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-
 
 
 	public String getAct() {
